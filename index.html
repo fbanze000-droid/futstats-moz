@@ -496,8 +496,7 @@
       <div class="hero">
         <h1>Analise os números antes de apostar</h1>
         <p>
-          Consulte jogos, forma recente, gols, xG e probabilidades estatísticas de
-          campeonatos de vários países.
+          Consulte jogos, forma recente, gols, xG e probabilidades estatísticas de campeonatos de vários países.
         </p>
       </div>
     </div>
@@ -569,16 +568,14 @@
       <div class="ad-slot ad-square">Espaço para publicidade</div>
 
       <div class="notice">
-        <strong>Atenção:</strong>
-        as probabilidades apresentadas são estimativas estatísticas e não garantem
-        resultados. Aposte apenas valores que pode perder e respeite a legislação local.
+        <strong>Atenção:</strong> as probabilidades apresentadas são estimativas estatísticas e não garantem resultados. Aposte apenas valores que pode perder e respeite a legislação local.
       </div>
     </div>
   </main>
 
   <footer class="footer">FutStats MOZ 2026 - Plataforma independente de análise esportiva.</footer>
 
-  <script>
+  <script type="text/javascript">
     var API_URL = "/api/games";
     var allGames = [];
 
@@ -681,7 +678,14 @@
 
     function progress(label, value) {
       var roundedValue = Math.round(value);
-      return '<div class="probability-row"><span>' + label + '</span><strong>' + roundedValue + '%</strong></div><div class="progress"><div class="progress-bar" style="width:' + roundedValue + '%"></div></div>';
+      var html = "<div class='probability-row'>";
+      html += "<span>" + label + "</span>";
+      html += "<strong>" + roundedValue + "%</strong>";
+      html += "</div>";
+      html += "<div class='progress'>";
+      html += "<div class='progress-bar' style='width:" + roundedValue + "%'></div>";
+      html += "</div>";
+      return html;
     }
 
     function normalizeGame(game) {
@@ -710,61 +714,57 @@
       safe.status = game.status || "not_started";
       safe.homeScore = parseInt(game.homeScore) || 0;
       safe.awayScore = parseInt(game.awayScore) || 0;
-      
       return safe;
     }
 
     function createCard(game) {
       var item = normalizeGame(game);
       var iconForLeague = leagueIcons[item.key] || "⚽";
-      
-      var html = '<article class="card" data-key="' + item.key + '" data-market="' + item.market + '">';
-      html += '<div class="match-top">';
-      html += '<span class="league"><span class="league-badge">' + iconForLeague + '</span>' + item.country + ' - ' + item.league + '</span>';
-      html += '<span class="match-time">' + item.time + '</span>';
-      html += '</div>';
-      html += '<div class="teams">';
-      html += '<div class="team"><div class="team-emoji">' + item.homeEmoji + '</div><div class="team-name">' + item.home + '</div></div>';
-      html += '<div class="versus">X</div>';
-      html += '<div class="team"><div class="team-emoji">' + item.awayEmoji + '</div><div class="team-name">' + item.away + '</div></div>';
-      html += '</div>';
-      html += '<div class="recommendation"><strong>Seleção estatística: ' + item.recommendation + '</strong>Confiança estatística estimada: ' + Math.round(item.confidence) + '%</div>';
-      html += '<div class="stats">';
-      html += '<div class="stat"><span class="stat-label">Vitória mandante</span><span class="stat-value">' + Math.round(item.homeWin) + '%</span></div>';
-      html += '<div class="stat"><span class="stat-label">Empate</span><span class="stat-value">' + Math.round(item.draw) + '%</span></div>';
-      html += '<div class="stat"><span class="stat-label">Vitória visitante</span><span class="stat-value">' + Math.round(item.awayWin) + '%</span></div>';
-      html += '<div class="stat"><span class="stat-label">Mais de 2.5 gols</span><span class="stat-value">' + Math.round(item.over25) + '%</span></div>';
-      html += '<div class="stat"><span class="stat-label">Ambas marcam</span><span class="stat-value">' + Math.round(item.btts) + '%</span></div>';
-      html += '<div class="stat"><span class="stat-label">xG estimado</span><span class="stat-value">' + item.xgHome.toFixed(2) + ' - ' + item.xgAway.toFixed(2) + '</span></div>';
-      html += '<div class="stat"><span class="stat-label">Forma mandante</span><span class="stat-value">' + item.homeForm + '</span></div>';
-      html += '<div class="stat"><span class="stat-label">Forma visitante</span><span class="stat-value">' + item.awayForm + '</span></div>';
-      html += '</div>';
-      html += '<div class="probabilities">';
-      html += progress('Vitória do mandante', item.homeWin);
-      html += progress('Empate', item.draw);
-      html += progress('Vitória do visitante', item.awayWin);
-      html += progress('Mais de 2.5 gols', item.over25);
-      html += progress('Ambas marcam', item.btts);
-      html += '</div>';
-      html += '</article>';
-      
+      var html = "<article class='card' data-key='" + item.key + "' data-market='" + item.market + "'>";
+      html += "<div class='match-top'>";
+      html += "<span class='league'><span class='league-badge'>" + iconForLeague + "</span>" + item.country + " - " + item.league + "</span>";
+      html += "<span class='match-time'>" + item.time + "</span>";
+      html += "</div>";
+      html += "<div class='teams'>";
+      html += "<div class='team'><div class='team-emoji'>" + item.homeEmoji + "</div><div class='team-name'>" + item.home + "</div></div>";
+      html += "<div class='versus'>X</div>";
+      html += "<div class='team'><div class='team-emoji'>" + item.awayEmoji + "</div><div class='team-name'>" + item.away + "</div></div>";
+      html += "</div>";
+      html += "<div class='recommendation'><strong>Seleção estatística: " + item.recommendation + "</strong>Confiança: " + Math.round(item.confidence) + "%</div>";
+      html += "<div class='stats'>";
+      html += "<div class='stat'><span class='stat-label'>Vitória mandante</span><span class='stat-value'>" + Math.round(item.homeWin) + "%</span></div>";
+      html += "<div class='stat'><span class='stat-label'>Empate</span><span class='stat-value'>" + Math.round(item.draw) + "%</span></div>";
+      html += "<div class='stat'><span class='stat-label'>Vitória visitante</span><span class='stat-value'>" + Math.round(item.awayWin) + "%</span></div>";
+      html += "<div class='stat'><span class='stat-label'>Mais de 2.5 gols</span><span class='stat-value'>" + Math.round(item.over25) + "%</span></div>";
+      html += "<div class='stat'><span class='stat-label'>Ambas marcam</span><span class='stat-value'>" + Math.round(item.btts) + "%</span></div>";
+      html += "<div class='stat'><span class='stat-label'>xG estimado</span><span class='stat-value'>" + item.xgHome.toFixed(2) + " - " + item.xgAway.toFixed(2) + "</span></div>";
+      html += "<div class='stat'><span class='stat-label'>Forma mandante</span><span class='stat-value'>" + item.homeForm + "</span></div>";
+      html += "<div class='stat'><span class='stat-label'>Forma visitante</span><span class='stat-value'>" + item.awayForm + "</span></div>";
+      html += "</div>";
+      html += "<div class='probabilities'>";
+      html += progress("Vitória do mandante", item.homeWin);
+      html += progress("Empate", item.draw);
+      html += progress("Vitória do visitante", item.awayWin);
+      html += progress("Mais de 2.5 gols", item.over25);
+      html += progress("Ambas marcam", item.btts);
+      html += "</div>";
+      html += "</article>";
       return html;
     }
 
     function render(list) {
-      var container = document.getElementById('matches');
-      var counter = document.getElementById('counter');
+      var container = document.getElementById("matches");
+      var counter = document.getElementById("counter");
 
       if (!list || list.length === 0) {
-        counter.textContent = 'Nenhum jogo encontrado';
-        container.innerHTML = '<div class="message"><div class="message-icon">🔍</div><p>Nenhum jogo corresponde aos filtros selecionados.</p></div>';
+        counter.textContent = "Nenhum jogo encontrado";
+        container.innerHTML = "<div class='message'><div class='message-icon'>🔍</div><p>Nenhum jogo corresponde aos filtros selecionados.</p></div>";
         return;
       }
 
-      var countText = list.length === 1 ? ' jogo encontrado' : ' jogos encontrados';
+      var countText = list.length === 1 ? " jogo encontrado" : " jogos encontrados";
       counter.textContent = list.length + countText;
-      
-      var html = '';
+      var html = "";
       for (var i = 0; i < list.length; i++) {
         html += createCard(normalizeGame(list[i]));
       }
@@ -772,16 +772,16 @@
     }
 
     function filterGames() {
-      var championship = document.getElementById('championship').value;
-      var market = document.getElementById('market').value;
-      var minimum = parseFloat(document.getElementById('minimum').value);
+      var championship = document.getElementById("championship").value;
+      var market = document.getElementById("market").value;
+      var minimum = parseFloat(document.getElementById("minimum").value);
 
       var filtered = [];
       for (var i = 0; i < allGames.length; i++) {
         var game = allGames[i];
         var normalized = normalizeGame(game);
-        var sameChampionship = championship === 'all' || normalized.key === championship;
-        var sameMarket = market === 'all' || normalized.market === market;
+        var sameChampionship = championship === "all" || normalized.key === championship;
+        var sameMarket = market === "all" || normalized.market === market;
         if (sameChampionship && sameMarket && normalized.confidence >= minimum) {
           filtered.push(game);
         }
@@ -791,26 +791,26 @@
     }
 
     function clearFilters() {
-      document.getElementById('championship').value = 'all';
-      document.getElementById('market').value = 'all';
-      document.getElementById('minimum').value = '0';
+      document.getElementById("championship").value = "all";
+      document.getElementById("market").value = "all";
+      document.getElementById("minimum").value = "0";
       render(allGames);
     }
 
     function setStatus(text, type) {
-      var statusBox = document.getElementById('statusBox');
-      statusBox.classList.remove('loading', 'error');
-      if (type === 'loading') statusBox.classList.add('loading');
-      if (type === 'error') statusBox.classList.add('error');
-      document.getElementById('statusText').textContent = text;
+      var statusBox = document.getElementById("statusBox");
+      statusBox.classList.remove("loading", "error");
+      if (type === "loading") statusBox.classList.add("loading");
+      if (type === "error") statusBox.classList.add("error");
+      document.getElementById("statusText").textContent = text;
     }
 
     function fetchGames() {
-      setStatus('Sincronizando dados diários...', 'loading');
+      setStatus("Sincronizando dados diários...", "loading");
 
-      fetch(API_URL, { cache: 'no-store' })
+      fetch(API_URL, { cache: "no-store" })
         .then(function(response) {
-          if (!response.ok) throw new Error('Erro na API');
+          if (!response.ok) throw new Error("Erro na API");
           return response.json();
         })
         .then(function(data) {
@@ -819,26 +819,26 @@
           } else {
             allGames = demoGames;
           }
-          
+
           if (data.lastUpdate) {
             var date = new Date(data.lastUpdate);
-            document.getElementById('updated').textContent = date.toLocaleString('pt-PT');
+            document.getElementById("updated").textContent = date.toLocaleString("pt-PT");
           } else {
-            document.getElementById('updated').textContent = 'Modo demonstrativo';
+            document.getElementById("updated").textContent = "Modo demonstrativo";
           }
-          setStatus('Dados atualizados com sucesso', '');
+          setStatus("Dados atualizados com sucesso", "");
           render(allGames);
         })
         .catch(function(error) {
           allGames = demoGames;
-          document.getElementById('updated').textContent = 'Modo demonstrativo';
-          setStatus('Usando dados de demonstração. Tente novamente mais tarde.', 'error');
+          document.getElementById("updated").textContent = "Modo demonstrativo";
+          setStatus("Usando dados de demonstração. Tente novamente mais tarde.", "error");
           render(allGames);
         });
     }
 
-    document.getElementById('filterButton').addEventListener('click', filterGames);
-    document.getElementById('clearButton').addEventListener('click', clearFilters);
+    document.getElementById("filterButton").addEventListener("click", filterGames);
+    document.getElementById("clearButton").addEventListener("click", clearFilters);
 
     allGames = demoGames;
     render(allGames);
